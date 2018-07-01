@@ -82,20 +82,28 @@ pause
 :remove_OneDrive
 	cd %SYSTEMROOT%
 	::FOR 64 BIT
-	IF EXISTS %SYSTEMROOT%\SysWOW64\OneDriveSetup.exe (
-	::let's do some removing! 
-	%SYSTEMROOT%\SysWOW64\OneDriveSetup.exe /uninstall		
-	GOTO edit_Registry
+	IF EXISTS %SYSTEMROOT%\System32\OneDriveSetup.exe (
+	%SYSTEMROOT%\System32\OneDriveSetup.exe /uninstall 
+	GOTO edit32_Registry
 	
 	) 
 	
-	ELSE IF EXISTS %SYSTEMROOT%\System32\OneDriveSetup.exe (
-	%SYSTEMROOT%\System32\OneDriveSetup.exe /uninstall 
-	GOTO edit_Registry
+	ELSE IF EXISTS %SYSTEMROOT%\SysWOW64\OneDriveSetup.exe (
+	::let's do some removing! 
+	%SYSTEMROOT%\SysWOW64\OneDriveSetup.exe /uninstall		
+	GOTO edit64_Registry
 	
+	ELSE (
+		ECHO You do not have OneDrive installed.
+		SLEEP 5
+		EXIT
+	)
 	)
 	
-:edit_Registry
+:edit32_Registry
+::changes the registry so OneDrive doesn't show in FileExplorer.
+
+:edit64_Registry
 ::changes the registry so OneDrive doesn't show in FileExplorer.
 	
 :restore_Registry
