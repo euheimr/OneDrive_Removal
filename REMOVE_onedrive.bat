@@ -18,10 +18,12 @@ echo Supported on Windows 8.1+
 
 
 
-
 ::checks and prompts the user if they are running the script in ADMIN or not. 
-GOTO check_Permissions
-pause
+::GOTO check_Permissions
+GOTO while_ans_test
+
+::logical 'while' loops
+:while_ans
 	::if the user passes as an admin, we continue here.
 	echo Are you sure you want to remove OneDrive completely? 
 	echo To reinstall, enter R below.
@@ -34,13 +36,46 @@ pause
 	) ELSE IF answer==N OR answer==n(
 	ECHO Exiting in 5..
 	timeout /t 5 
+	exit
 	)
 	
 	ELSE IF answer==R OR answer==r(
-	::[re]install it, and restore the registry keys!
-	GOTO install_OneDrive
-	GOTO restore_Registry
+		::[re]install it, and restore the registry keys!
+		GOTO install_OneDrive
+		GOTO restore_Registry
+		ECHO COMPLETE! 
+		timeout /t 10
+		)
+	::loop itself back
+	ELSE(
+		ECHO invalid answer.
+		GOTO while_ans
+	)
 	
+	
+:while_ans_test
+	echo Are you sure you want to remove OneDrive completely? 
+	echo To reinstall, enter R below.
+	SET "/P answer=Yes(Y), No(N), Reinstall(R):"
+	
+	IF answer==Y OR answer==y(
+		
+	) ELSE IF answer==N OR answer==n(
+	ECHO Exiting in 5..
+	timeout /t 5 
+	)
+	
+	ELSE IF answer==R OR answer==r(
+		echo answser
+		)
+	ELSE(
+		ECHO invalid answer. You entered:
+		ECHO answer	
+		timeout /t 5
+		GOTO while_ans
+	)
+	ECHO answer	
+
 	
 	
 ::TODO	

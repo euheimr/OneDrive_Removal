@@ -9,6 +9,12 @@ This is a tool script I made, because I use a different cloud storage solution a
 This is especially true for me as I reinstall or install windows often.
 
 
+Originally, I scripted most of this in msdos batch. It didn't support certain things I wanted to do (loops for starters..)...
+
+So now I'm writing the Visual Basic script instead! 
+Not sure on the ETA on this one..
+
+
 ```
 32Bit:
 
